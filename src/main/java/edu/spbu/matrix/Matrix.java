@@ -3,21 +3,17 @@ package edu.spbu.matrix;
 /**
  *
  */
-public interface Matrix
+public abstract class Matrix
 {
+  int h,w;
   /**
    * однопоточное умнджение матриц
    * должно поддерживаться для всех 4-х вариантов
    * @param o
    * @return
    */
-  Matrix mul(Matrix o);
-
-  /**
-   * многопоточное умножение матриц
-   * @param o
-   * @return
-   */
-  Matrix dmul(Matrix o);
-
+  abstract public Matrix mul(Matrix o) throws WrongSizeException, MemoryAllocateException;
+  abstract public String toString();
+  abstract public boolean equals(Object o);
+  abstract public double getElement(int i, int j);
 }

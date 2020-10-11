@@ -3,8 +3,7 @@ package edu.spbu.matrix;
 /**
  * Разряженная матрица
  */
-public class SparseMatrix implements Matrix
-{
+public class SparseMatrix extends Matrix {
   /**
    * загружает матрицу из файла
    * @param fileName
@@ -23,23 +22,8 @@ public class SparseMatrix implements Matrix
   {
     return null;
   }
-
-  /**
-   * многопоточное умножение матриц
-   *
-   * @param o
-   * @return
-   */
-  @Override public Matrix dmul(Matrix o)
-  {
-    return null;
-  }
-
-  /**
-   * спавнивает с обоими вариантами
-   * @param o
-   * @return
-   */
+  @Override public String toString() {return "";}
+  @Override public double getElement(int i, int j) {return 0;}
   @Override public boolean equals(Object o) {
     return false;
   }
