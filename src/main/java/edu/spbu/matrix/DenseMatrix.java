@@ -2,9 +2,6 @@ package edu.spbu.matrix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -21,11 +18,9 @@ public class DenseMatrix extends Matrix
       this.h++;
       String[] array = datascan.nextLine().split(" ");
       this.w=array.length;
-      for(int i=0;i<array.length;i++)
-      {
-        double el = Double.parseDouble(array[i]);
-        if(!tempdata.add(el))
-        {
+      for (String s : array) {
+        double el = Double.parseDouble(s);
+        if (!tempdata.add(el)) {
           throw new MemoryAllocateException("Err");
         }
       }
@@ -49,25 +44,18 @@ public class DenseMatrix extends Matrix
   }
   @Override
   public String toString() {
-    String alpha="";
+    StringBuilder alpha= new StringBuilder();
     for(int i=0;i<h;i++)
     {
       for(int j=0;j<w;j++)
       {
-        alpha+=Double.toString(data[i][j])+" ";
+        alpha.append(data[i][j]).append(" ");
       }
-      alpha+="\n";
+      alpha.append("\n");
     }
-    return alpha;
+    return alpha.toString();
   }
 
-  /**
-   * однопоточное умнджение матриц
-   * должно поддерживаться для всех 4-х вариантов
-   *
-   * @param o
-   * @return
-   */
   @Override public Matrix mul(Matrix o) throws WrongSizeException
   {
     if(this.w!=o.h)
@@ -88,9 +76,10 @@ public class DenseMatrix extends Matrix
     }
     return m;
   }
-  @Override public boolean equals(Object ox) {
-    Matrix o=(Matrix) ox;
-    if((this.h!=o.h)||(this.w!=o.w))
+  @Override public boolean equals(Object o) {
+    if (getClass() != o.getClass()) return false;
+    Matrix m=(Matrix) o;
+    if((this.h!=m.h)||(this.w!=m.w))
     {
       return false;
     }
@@ -98,7 +87,7 @@ public class DenseMatrix extends Matrix
     {
       for(int j=0;j<this.w;j++)
       {
-        if (this.data[i][j]!=o.getElement(i,j))
+        if (this.data[i][j]!=m.getElement(i,j))
         {
           return false;
         }

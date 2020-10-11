@@ -2,11 +2,8 @@ package edu.spbu.matrix;
 
 import org.junit.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
-import static org.junit.Assert.assertEquals;
 
 public class MatrixTest {
   /**
@@ -14,12 +11,12 @@ public class MatrixTest {
    */
   @Test
   public void mulDD() {
-    DenseMatrix m1 = null,m2=null,mr=null,m3=null;
+    Matrix m1 ,m2,mr,m3;
     try {
       m1 = new DenseMatrix("./src/main/m1.txt");
       m2 =  new DenseMatrix("./src/main/m2.txt");
       mr =  new DenseMatrix("./src/main/mr.txt");
-      m3= (DenseMatrix) m1.mul(m2);
+      m3 =  m1.mul(m2);
       if(m3.equals(mr))
       {
         System.out.println("It's working :)");
