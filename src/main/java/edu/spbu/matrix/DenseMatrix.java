@@ -38,7 +38,7 @@ public class DenseMatrix extends Matrix
         throw new NumberFormatException();
       }
     }
-    if (this.h==0)
+    if ((this.h==0)||(this.w==0))
     {
       throw new NumberFormatException();
     }
