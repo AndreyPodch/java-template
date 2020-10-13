@@ -13,17 +13,34 @@ public class DenseMatrix extends Matrix
     datascan = new Scanner(new File(fileName));
     ArrayList<Double> tempdata=new ArrayList<>();
     this.h=0;
+    this.w=0;
+    int z;
     while(datascan.hasNextLine())
     {
+      z=0;
       this.h++;
       String[] array = datascan.nextLine().split(" ");
-      this.w=array.length;
       for (String s : array) {
-        double el = Double.parseDouble(s);
-        if (!tempdata.add(el)) {
-          throw new MemoryAllocateException("Err");
+        if(s.length()!=0) {
+          double el = Double.parseDouble(s);
+          if (!tempdata.add(el)) {
+            throw new MemoryAllocateException();
+          }
+          z++;
         }
       }
+      if(this.w==0)
+      {
+        this.w=z;
+      }
+      else if(this.w!=z)
+      {
+        throw new NumberFormatException();
+      }
+    }
+    if (this.h==0)
+    {
+      throw new NumberFormatException();
     }
     this.data=new double[h][w];
     for (int i=0;i<tempdata.size();i++)
@@ -51,7 +68,7 @@ public class DenseMatrix extends Matrix
       {
         alpha.append(data[i][j]).append(" ");
       }
-      alpha.append("\n");
+      if(i!=h-1) alpha.append("\n");
     }
     return alpha.toString();
   }
@@ -60,7 +77,7 @@ public class DenseMatrix extends Matrix
   {
     if(this.w!=o.h)
     {
-      throw new WrongSizeException("Err");
+      throw new WrongSizeException();
     }
     DenseMatrix m=new DenseMatrix(o.w,this.h);
     for(int i=0;i<m.h;i++)

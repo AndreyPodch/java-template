@@ -24,7 +24,11 @@ public class MatrixTest {
       else
       {
         System.out.println("It isn't working :(");
+        System.out.println("Answer:");
+        System.out.println(m3);
+        System.out.println("But expect:");
       }
+      System.out.println(mr);
 
     } catch (FileNotFoundException e) {
       System.out.println("Sorry, can't find file :(");
