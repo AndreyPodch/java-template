@@ -12,10 +12,11 @@ public class MatrixTest {
   @Test
   public void mulDD() throws Exception{
     Matrix m1 ,m2,mr,m3;
+
     try {
-      m1 = new DenseMatrix("./src/main/m1.txt");
+      m1 = new SparseMatrix("./src/main/m1.txt");
       m2 =  new DenseMatrix("./src/main/m2.txt");
-      mr =  new DenseMatrix("./src/main/mr.txt");
+      mr =  new SparseMatrix("./src/main/mr.txt");
       m3 =  m1.mul(m2);
       if(m3.equals(mr))
       {

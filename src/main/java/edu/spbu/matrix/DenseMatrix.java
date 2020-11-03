@@ -73,12 +73,37 @@ public class DenseMatrix extends Matrix
     return alpha.toString();
   }
 
-  @Override public Matrix mul(Matrix o) throws WrongSizeException
-  {
-    if(this.w!=o.h)
+  @Override
+  public Matrix transposition() {
+    DenseMatrix m=new DenseMatrix(this.h,this.w);
+    for(int i=0;i<this.h;i++)
     {
+      for(int j=0;j<this.w;j++)
+      {
+        m.data[j][i]=this.data[i][j];
+      }
+    }
+    return m;
+  }
+
+  @Override public Matrix mul(Matrix o) throws WrongSizeException {
+    if (this.w != o.h) {
       throw new WrongSizeException();
     }
+    Matrix mulm;
+    if (o instanceof DenseMatrix) {
+      mulm = this.dtodmul((DenseMatrix) o);
+    }
+    else
+    {
+      SparseMatrix s=(SparseMatrix) o;
+      DenseMatrix m=this;
+      mulm=(s.transposition().mul(m.transposition())).transposition();
+    }
+    return mulm;
+  }
+  public DenseMatrix dtodmul(DenseMatrix o)
+  {
     DenseMatrix m=new DenseMatrix(o.w,this.h);
     for(int i=0;i<m.h;i++)
     {
@@ -93,9 +118,20 @@ public class DenseMatrix extends Matrix
     }
     return m;
   }
-  @Override public boolean equals(Object o) {
+  @Override public boolean equals(Object o)
+  {
+    if (o instanceof DenseMatrix)
+    {
+      return  this.ddequals(o);
+    }
+    else
+    {
+      return ((SparseMatrix) o).equals(this);
+    }
+  }
+   public boolean ddequals(Object o) {
     if (getClass() != o.getClass()) return false;
-    Matrix m=(Matrix) o;
+    DenseMatrix m=(DenseMatrix) o;
     if((this.h!=m.h)||(this.w!=m.w))
     {
       return false;
@@ -104,7 +140,7 @@ public class DenseMatrix extends Matrix
     {
       for(int j=0;j<this.w;j++)
       {
-        if (this.data[i][j]!=m.getElement(i,j))
+        if (this.data[i][j]!=m.data[i][j])
         {
           return false;
         }
