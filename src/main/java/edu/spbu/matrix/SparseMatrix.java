@@ -111,6 +111,18 @@ public class SparseMatrix extends Matrix {
     if (this.w != o.h) {
       throw new WrongSizeException();
     }
+    Matrix mulm;
+    if (o instanceof DenseMatrix) mulm = this.stodmul(o);
+    else
+    {
+      mulm=this.stosmul(o);
+    }
+    return mulm;
+  }
+  public Matrix stodmul(Matrix o) throws WrongSizeException {
+    if (this.w != o.h) {
+      throw new WrongSizeException();
+    }
     SparseMatrix res = new SparseMatrix(this.h, o.w);
     ArrayList<Double> tempdata = new ArrayList<>();
     ArrayList<Integer> numColumn = new ArrayList<>();
@@ -145,6 +157,64 @@ public class SparseMatrix extends Matrix {
     }
     return res;
   }
+  public Matrix stosmul(Matrix o) throws WrongSizeException
+  {
+    SparseMatrix s=(SparseMatrix) o.transposition();
+    SparseMatrix res=new SparseMatrix(this.h,s.h);
+    ArrayList<Double> tempdata = new ArrayList<>();
+    ArrayList<Integer> numColumn = new ArrayList<>();
+    ArrayList<Integer> ElementsInColumn = new ArrayList<>();
+    ElementsInColumn.add(0);
+    int it1,it2,r1,r2,kol;
+    double tempel;
+    kol=0;
+    for (int i = 0; i < this.NumElInRow.length-1; i++)
+    {
+      int st = this.NumElInRow[i], fn = this.NumElInRow[i + 1];
+      for(int j=0;j<s.NumElInRow.length-1;j++)
+      {
+        int sts = s.NumElInRow[j], fns = s.NumElInRow[j + 1];
+        tempel=0;
+        it1 = st;
+        it2 = sts;
+        while ((it1 < fn) && (it2 < fns)) {
+          if(this.columnIndex[it1]==s.columnIndex[it2])
+          {
+            tempel+=this.elements[it1]*s.elements[it2];
+            it1++;
+            it2++;
+          }
+          else if (this.columnIndex[it1]<s.columnIndex[it2])
+          {
+            it1++;
+          }
+          else
+          {
+            it2++;
+          }
+        }
+        if(tempel!=0)
+        {
+          kol++;
+          tempdata.add(tempel);
+          numColumn.add(j);
+        }
+      }
+      ElementsInColumn.add(kol);
+    }
+    res.elements = new double[tempdata.size()];
+    res.columnIndex = new int[numColumn.size()];
+    for (int i = 0; i < tempdata.size(); i++) {
+      res.elements[i] = tempdata.get(i);
+      res.columnIndex[i] = numColumn.get(i);
+    }
+    res.NumElInRow = new int[ElementsInColumn.size()];
+    for (int i = 0; i < ElementsInColumn.size(); i++) {
+      res.NumElInRow[i] = ElementsInColumn.get(i);
+    }
+    return res;
+  }
+
 
   public String SMdebug() {
     StringBuilder alpha = new StringBuilder();
