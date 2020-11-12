@@ -3,6 +3,7 @@ package edu.spbu.matrix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.*;
 
 /**
@@ -119,10 +120,7 @@ public class SparseMatrix extends Matrix {
     }
     return mulm;
   }
-  public Matrix stodmul(Matrix o) throws WrongSizeException {
-    if (this.w != o.h) {
-      throw new WrongSizeException();
-    }
+  public Matrix stodmul(Matrix o)  {
     SparseMatrix res = new SparseMatrix(this.h, o.w);
     ArrayList<Double> tempdata = new ArrayList<>();
     ArrayList<Integer> numColumn = new ArrayList<>();
@@ -157,8 +155,7 @@ public class SparseMatrix extends Matrix {
     }
     return res;
   }
-  public Matrix stosmul(Matrix o) throws WrongSizeException
-  {
+  public Matrix stosmul(Matrix o) {
     SparseMatrix s=(SparseMatrix) o.transposition();
     SparseMatrix res=new SparseMatrix(this.h,s.h);
     ArrayList<Double> tempdata = new ArrayList<>();
@@ -250,7 +247,7 @@ public class SparseMatrix extends Matrix {
         alpha.append(elements[w]).append(" ");
         tempnum++;
       }
-      if (w - tempnum > 1) {
+      while (this.w - tempnum > 1) {
         alpha.append("0.0 ");
         tempnum++;
       }
