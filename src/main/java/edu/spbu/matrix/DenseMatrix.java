@@ -126,7 +126,7 @@ public class DenseMatrix extends Matrix
     final DenseMatrix m1=this;
     class ParallelDenseMulMatrix implements Runnable
     {
-      int rs,rf,cs,cf;
+      final int rs,rf,cs,cf;
       public  ParallelDenseMulMatrix(int rs,int cs, int rf, int cf)
       {
         this.rs=rs;
@@ -180,7 +180,7 @@ public class DenseMatrix extends Matrix
     }
     else
     {
-      return ((SparseMatrix) o).equals(this);
+      return o.equals(this);
     }
   }
    public boolean ddequals(Object o) {

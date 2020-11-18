@@ -3,7 +3,6 @@ package edu.spbu.matrix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Collections;
 import java.util.*;
 
 /**
@@ -152,9 +151,9 @@ public class SparseMatrix extends Matrix {
     res.NumElInRow[0]=0;
     class ParallelSparseMulMatrix implements Runnable
     {
-      ArrayList<Double> data;
-      ArrayList<Integer> Column;
-      int sr,fr;
+      final ArrayList<Double> data;
+      final ArrayList<Integer> Column;
+      final int sr,fr;
       public  ParallelSparseMulMatrix(ArrayList<Double> data,ArrayList<Integer> Column, int sr, int fr)
       {
         this.data=data;
