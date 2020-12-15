@@ -2,6 +2,7 @@ package edu.spbu.matrix;
 
 import Internet.Client;
 import Internet.Server;
+import Internet.ServerDisable;
 import org.junit.Test;
 
 
@@ -17,11 +18,12 @@ public class ServerTest {
                 sr1.ServerStart();
             }
         }
+        ServerDisable.need=false;
         Thread th = new Thread(new ServerParallelRunning());
         th.start();
-        System.out.println("HEW");
         Client cl1 = new Client("localhost", 80, "m1.txt");
         cl1.GETrequest();
+        ServerDisable.need=true;
         th.join();
     }
 }

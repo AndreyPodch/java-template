@@ -25,11 +25,10 @@ public class Client {
             Scanner response = new Scanner(socket.getInputStream());
             String Grequest = "GET /" + URL + " HTTP/1.1\r\nHost: " + this.host + "\r\nConnection: close\r\n\r\n\"";
             System.out.println(Grequest);
-            request.println(Grequest);{
-                while (response.hasNextLine()) {
+            request.println(Grequest);
+            while (response.hasNextLine()) {
                     System.out.println(response.nextLine());
                 }
-            }
         } catch (UnknownHostException e) {
             System.out.println("Host not found");
         } catch (IOException e) {

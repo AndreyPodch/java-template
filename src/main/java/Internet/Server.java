@@ -21,7 +21,7 @@ public class Server {
         try
         {
             ServerSocket server=new ServerSocket(port);
-            while (true){
+            while (!ServerDisable.need){
                 Socket client = server.accept();
                 PrintStream responseStream = new PrintStream(client.getOutputStream());
                 Scanner requestStream = new Scanner(client.getInputStream());
@@ -43,6 +43,7 @@ public class Server {
                         this.sendResponse(responseStream, 404, nf, "text/plain", l);
                         responseStream.println("Not Found");
                     }
+                    client.close();
                     responseStream.flush();
                 }
             }
